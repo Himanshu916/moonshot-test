@@ -36,7 +36,7 @@ function ProductCard() {
     }
   }
 
-  if (!product) return <ShimmerCard />;
+  if (!product) return <ShimmerCard from="product" />;
   const { largeImageURL, user, tags, likes, type, user_id, views, downloads } =
     product;
 
