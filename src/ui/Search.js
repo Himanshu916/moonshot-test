@@ -9,6 +9,7 @@ function Search() {
     navigate("/search");
     searchParams.set("q", searchQuery);
     setSearchParams(searchParams);
+    setSearchQuery("");
   }
 
   return (

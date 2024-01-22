@@ -5,10 +5,11 @@ import { useSearchParams } from "react-router-dom";
 import Header from "../ui/Header";
 import Search from "../ui/Search";
 import ShimmerCard from "../ui/ShimmerCard";
+import SearchFilters from "../ui/SearchFilters";
 
 function SearchResult() {
   const [images, setImages] = useState([]);
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const searchQuery = searchParams.get("q")?.split(" ") || [];
   const searchString = searchQuery.join("+");
 
@@ -18,6 +19,10 @@ function SearchResult() {
     },
     [searchString]
   );
+  function setQuery(name) {
+    searchParams.set("q", name.toLowerCase());
+    setSearchParams(searchParams);
+  }
 
   async function getImages(searchString) {
     try {
@@ -25,7 +30,7 @@ function SearchResult() {
         `https://pixabay.com/api/?key=${KEY}&q=${searchString}&image_type=photo`
       );
       const json = await data.json();
-      console.log(json);
+
       setImages(json.hits);
     } catch (error) {
       console.log(error);
@@ -33,7 +38,6 @@ function SearchResult() {
   }
   if (images.length === 0) return <ShimmerCard />;
 
-  console.log(images);
   return (
     <>
       <div className="flex flex-col gap-12 px-6 py-6 max-h-svh bg-hero3  bg-no-repeat bg-cover bg-center bg-fixed ">
@@ -43,6 +47,8 @@ function SearchResult() {
           Results:{searchQuery.join(" ")}
         </h2>
       </div>
+
+      <SearchFilters setQuery={setQuery} />
 
       <div className=" grid px-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 py-10">
         {images.map((img) => (
