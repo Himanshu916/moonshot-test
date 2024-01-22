@@ -6,7 +6,7 @@ function Tag({ tagName, from, setQuery }) {
         else return;
       }}
       className={`${
-        from ? "border-2 border-gray-400" : ""
+        from ? "border-2 border-gray-400 cursor-pointer" : ""
       }bg-gray-100 rounded-md w- text-gray-600 px-2 py-1`}
     >
       {tagName}
